@@ -20,6 +20,8 @@ public class Ovrvision : MonoBehaviour
 	//Camera texture
 	private Texture2D CameraTexLeft = null;
 	private Texture2D CameraTexRight = null;
+    private System.IntPtr CameraTexLeftPtr = System.IntPtr.Zero;
+    private System.IntPtr CameraTexRightPtr = System.IntPtr.Zero;
 	private Vector3 CameraRightGap;
 
 	//public propaty
@@ -99,6 +101,8 @@ public class Ovrvision : MonoBehaviour
 		//Create cam texture
 		CameraTexLeft = new Texture2D(OvrPro.imageSizeW, OvrPro.imageSizeH, TextureFormat.BGRA32, false);
 		CameraTexRight = new Texture2D(OvrPro.imageSizeW, OvrPro.imageSizeH, TextureFormat.BGRA32, false);
+        CameraTexLeftPtr = CameraTexLeft.GetNativeTexturePtr();
+        CameraTexRightPtr = CameraTexRight.GetNativeTexturePtr();
 		//Cam setting
 		CameraTexLeft.wrapMode = TextureWrapMode.Clamp;
 		CameraTexRight.wrapMode = TextureWrapMode.Clamp;
@@ -203,7 +207,7 @@ public class Ovrvision : MonoBehaviour
 		OvrPro.useOvrvisionAR = useOvrvisionAR;
 		OvrPro.useOvrvisionTrack = useOvrvisionTrack;
 
-        OvrPro.UpdateImage(CameraTexLeft.GetNativeTexturePtr(), CameraTexRight.GetNativeTexturePtr());
+        OvrPro.UpdateImage(CameraTexLeftPtr, CameraTexRightPtr);
 
 		if (useOvrvisionAR) OvrvisionARRender();
 		if (useOvrvisionTrack) OvrvisionTrackRender();
